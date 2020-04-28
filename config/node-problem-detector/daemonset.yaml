@@ -51,6 +51,7 @@ spec:
         - name: config
           mountPath: /config
           readOnly: true
+        imagePullPolicy: Always
       volumes:
       - name: log
         # Config `log` to your system log directory
@@ -66,4 +67,3 @@ spec:
         configMap:
           name: node-problem-detector-config
           defaultMode: 0744
-      imagePullPolicy: Always

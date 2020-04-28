@@ -13,21 +13,21 @@ import (
 func main() {
 	client := &http.Client{}
 
-    req, _ := http.NewRequest("GET", "http://169.254.169.254/metadata/scheduledevents", nil)
-    req.Header.Add("Metadata", "True")
+	req, _ := http.NewRequest("GET", "http://169.254.169.254/metadata/scheduledevents", nil)
+	req.Header.Add("Metadata", "True")
 
-    q := req.URL.Query()
-    q.Add("format", "json")
-    q.Add("api-version", "2019-01-01")
-    req.URL.RawQuery = q.Encode()
+	q := req.URL.Query()
+	q.Add("format", "json")
+	q.Add("api-version", "2019-01-01")
+	req.URL.RawQuery = q.Encode()
 
-    resp, err := client.Do(req)
-    if err != nil {
-        fmt.Println("Errored when sending request to the server")
-        return
-    }
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Errored when sending request to the server")
+		return
+	}
 
-    respBody, _ := ioutil.ReadAll(resp.Body)
+	respBody, _ := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
 
 	// Ignore any unsuccessful requests
@@ -52,10 +52,10 @@ func main() {
 }
 
 func stringInSlice(a string, list []string) bool {
-    for _, b := range list {
-        if b == a {
-            return true
-        }
-    }
-    return false
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
 }

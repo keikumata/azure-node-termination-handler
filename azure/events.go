@@ -1,4 +1,4 @@
-package events
+package azure
 
 type ScheduledEventsResponse struct {
 	DocumentIncarnation int              `json:"DocumentIncarnation"`

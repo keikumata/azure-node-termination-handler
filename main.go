@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/keikumata/azure-node-termination-handler/azure/events"
+	"github.com/keikumata/azure-node-termination-handler/azure"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	if resp.StatusCode == 200 {
-		var scheduledEventsResp events.ScheduledEventsResponse
+		var scheduledEventsResp azure.ScheduledEventsResponse
 		err := json.Unmarshal(respBody, &scheduledEventsResp)
 		// Ignore marshaling error
 		if err != nil {
@@ -44,16 +44,16 @@ func main() {
 		}
 		for _, v := range scheduledEventsResp.Events {
 			name := os.Getenv("NODE_NAME")
-			if *v.EventType == "Terminate" && stringInSlice(name, *v.Resources) {
+			if *v.EventType == "Terminate" && findNodeName(name, *v.Resources) {
 				os.Exit(1)
 			}
 		}
 	}
 }
 
-func stringInSlice(a string, list []string) bool {
+func findNodeName(a string, list []string) bool {
 	for _, b := range list {
-		if b == a {
+		if azure.ConvertNodeName(b) == a {
 			return true
 		}
 	}

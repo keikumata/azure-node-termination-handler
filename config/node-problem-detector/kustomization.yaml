@@ -1,0 +1,15 @@
+resources:
+- daemonset.yaml
+- clusterrole.yaml
+- clusterrolebinding.yaml
+- serviceaccount.yaml
+
+configMapGenerator:
+- name: node-problem-detector-config
+  files:
+  - plugin/node-termination-handler.json
+  - plugin/check_imds_termination_events.sh
+
+generatorOptions:
+  disableNameSuffixHash: true
+  

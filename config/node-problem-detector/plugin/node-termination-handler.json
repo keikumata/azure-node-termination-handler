@@ -1,0 +1,28 @@
+{
+  "plugin": "custom",
+  "pluginConfig": {
+    "invoke_interval": "30s",
+    "timeout": "15s",
+    "max_output_length": 80,
+    "concurrency": 3,
+    "enable_message_change_based_condition_update": false
+  },
+  "source": "node-termination-handler",
+  "metricsReporting": true,
+  "conditions": [
+    {
+      "type": "NodeTermination",
+      "reason": "NoNodeTerminationEvent",
+      "message": "no node termination event from the metadata service"
+    }
+  ],
+  "rules": [
+    {
+      "type": "permanent",
+      "condition": "NodeTermination",
+      "reason": "HasNodeTerminationEvent",
+      "path": "./config/check_imds_termination_events.sh",
+      "timeout": "15s"
+    }
+  ]
+}
